@@ -25,5 +25,11 @@ dependencies {
 
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
+
+    testCompile 'com.google.code.findbugs:jsr305:1.3.9'
 }
 
+compileJava {
+    sourceCompatibility JavaVersion.VERSION_1_7.toString()
+    targetCompatibility JavaVersion.VERSION_1_7.toString()
+}
