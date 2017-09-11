@@ -9,6 +9,20 @@
 // Apply the java-library plugin to add support for Java Library
 apply plugin: 'java-library'
 
+apply plugin: 'maven-publish'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
+    }
+}
+apply plugin: 'com.jfrog.bintray'
+
+
+
 // In this section you declare where to find the dependencies of your project
 repositories {
     // Use jcenter for resolving your dependencies.
@@ -32,4 +46,65 @@ dependencies {
 compileJava {
     sourceCompatibility JavaVersion.VERSION_1_7.toString()
     targetCompatibility JavaVersion.VERSION_1_7.toString()
+}
+
+// Your library will be referred as your_maven_group_name:library_name:version
+archivesBaseName = 'rolling'
+group = 'net.hikaruna'
+version = '0.0.1' // library version
+
+def utf8 = 'UTF-8'
+[compileJava, compileTestJava]*.options*.encoding = utf8
+
+task sourcesJar(type: Jar, dependsOn:classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn:javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+javadoc {
+    options.locale = 'en_US'
+}
+
+artifacts {
+    archives jar
+    archives sourcesJar
+    archives javadocJar
+}
+
+publishing {
+    publications {
+        mavenPublication(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+bintray {
+    user = project.hasProperty('bintray_user') ? bintray_user : ''
+
+    key = project.hasProperty('bintray_apikey') ? bintray_apikey : ''
+
+    pkg {
+        repo = 'maven'
+        name = 'rolling'
+        licenses = ['MIT']
+        websiteUrl = 'https://github.com/hikaruna/rolling'
+        issueTrackerUrl = 'https://github.com/hikaruna/rolling/issues'
+        vcsUrl = 'https://github.com/hikaruna/rolling.git'
+        version {
+            name = project.version
+            released = new Date()
+            gpg {
+                sign = true
+                passphrase = project.hasProperty('bintray_gpg_password') ? bintray_gpg_password : ''
+            }
+        }
+    }
+    publications = ['mavenPublication']
+    configurations = ['archives']
 }
