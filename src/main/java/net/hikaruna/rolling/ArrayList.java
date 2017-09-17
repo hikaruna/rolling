@@ -16,10 +16,22 @@ public class ArrayList<E> extends java.util.ArrayList<E> {
     /**
      * Constructs an empty list.
      *
-     * @see java.util.ArrayList
+     * @see java.util.ArrayList#ArrayList()
      */
     public ArrayList() {
         super();
+    }
+
+    /**
+     * Constructs an empty list with the specified initial capacity.
+     *
+     * @param initialCapacity the initialcapacity of the list
+     * @throws IllegalArgumentException if the specified initial capacity
+     *                                  is negative
+     * @see java.util.ArrayList#ArrayList(int)
+     */
+    public ArrayList(int initialCapacity) {
+        super(initialCapacity);
     }
 
     /**

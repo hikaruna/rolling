@@ -15,6 +15,11 @@ public class ArrayListTest {
     }
 
     @Test
+    public void testConstructorWithInitialCapacity() {
+        assertEquals(new java.util.ArrayList(5), new ArrayList(5));
+    }
+
+    @Test
     public void testEach() {
         final ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
 
