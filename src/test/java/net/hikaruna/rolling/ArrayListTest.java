@@ -41,4 +41,19 @@ public class ArrayListTest {
         assertEquals(Integer.valueOf(16), squaredList.get(1));
         assertEquals(Integer.valueOf(64), squaredList.get(2));
     }
+
+    @Test
+    public void testMap() {
+        final ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
+
+        final ArrayList<Integer> squaredList = arrayList.map(new Function<Integer, Integer>() {
+            @Override
+            public Integer call(Integer integer) {
+                return integer * integer;
+            }
+        });
+        assertEquals(Integer.valueOf(1), squaredList.get(0));
+        assertEquals(Integer.valueOf(16), squaredList.get(1));
+        assertEquals(Integer.valueOf(64), squaredList.get(2));
+    }
 }
