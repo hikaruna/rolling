@@ -2,8 +2,10 @@
 ## 概要
 rollingはjava7でmapReduceを行うためのライブラリです。
 
-## Code Status
+## Status
 [![Build Status](https://travis-ci.org/hikaruna/rolling.svg?branch=master)](https://travis-ci.org/hikaruna/rolling)
+[![Download](https://api.bintray.com/packages/hikaruna/maven/rolling/images/download.svg) ](https://bintray.com/hikaruna/maven/rolling/_latestVersion)
+
 
 ## インストール
 
