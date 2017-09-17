@@ -53,4 +53,19 @@ public class ArrayList<E> extends java.util.ArrayList<E> {
             function.call(i);
         }
     }
+
+    /**
+     * 各要素を順番に{@link Function}に渡して評価し、その結果で要素を置き換えた{@link ArrayList}を返します.
+     *
+     * @param function 評価内容
+     * @param <Ret>    評価結果の型
+     * @return 要素を置き換えた結果
+     */
+    public <Ret> ArrayList<Ret> map(@Nonnull final Function<Ret, E> function) {
+        final ArrayList<Ret> result = new ArrayList<>(size());
+        for (final E i : this) {
+            result.add(function.call(i));
+        }
+        return result;
+    }
 }
