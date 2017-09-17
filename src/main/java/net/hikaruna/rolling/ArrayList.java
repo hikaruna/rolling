@@ -14,6 +14,15 @@ public class ArrayList<E> extends java.util.ArrayList<E> {
     private static final long serialVersionUID = 1054066276178532545L;
 
     /**
+     * Constructs an empty list.
+     *
+     * @see java.util.ArrayList
+     */
+    public ArrayList() {
+        super();
+    }
+
+    /**
      * {@link java.util.ArrayList#ArrayList(Collection)}と同じ.
      *
      * @param c the collection whose elements are to be placed into this list

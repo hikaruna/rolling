@@ -10,6 +10,11 @@ import static org.junit.Assert.assertEquals;
 public class ArrayListTest {
 
     @Test
+    public void testConstructor() {
+        assertEquals(new java.util.ArrayList(), new ArrayList());
+    }
+
+    @Test
     public void testEach() {
         final ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
 
