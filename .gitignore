@@ -154,3 +154,12 @@ fabric.properties
 /.project
 /.classpath
 /secret
+
+
+
+# custom
+.DS_Store
+*.iml
+.idea/*
+!.idea/scopes
+!.idea/dictionaries/rolling.dic

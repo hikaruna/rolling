@@ -78,6 +78,7 @@ artifacts {
 
 publishing {
     publications {
+        //noinspection GroovyAssignabilityCheck
         mavenPublication(MavenPublication) {
             from components.java
         }
