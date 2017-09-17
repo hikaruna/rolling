@@ -11,12 +11,11 @@ rollingはjava7でmapReduceを行うためのライブラリです。
 // build.gradle
 
 repositories {
-    maven {
-        url  "https://dl.bintray.com/hikaruna/maven"
+    jcenter()
 }
 
 dependencies {
-    compile 'net.hikaruna:rolling:0.0.1'
+    compile 'net.hikaruna:rolling:+'
 }
 
 ```
