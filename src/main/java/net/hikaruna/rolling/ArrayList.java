@@ -68,4 +68,20 @@ public class ArrayList<E> extends java.util.ArrayList<E> {
         }
         return result;
     }
+
+    /**
+     * 各要素を順番に{@link Function2}に渡して処理して集約し、その結果を返します
+     *
+     * @param init     最初のresultの値
+     * @param function 評価内容{@code function(Ret init, E item)}
+     * @param <Ret>    処理結果の型
+     * @return 集約した処理結果
+     */
+    public <Ret> Ret reduce(@Nonnull final Ret init, @Nonnull final Function2<Ret, Ret, E> function) {
+        Ret result = init;
+        for (final E i : this) {
+            result = function.call(result, i);
+        }
+        return result;
+    }
 }
