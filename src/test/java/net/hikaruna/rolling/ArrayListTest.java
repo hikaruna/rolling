@@ -56,4 +56,19 @@ public class ArrayListTest {
         assertEquals(Integer.valueOf(16), squaredList.get(1));
         assertEquals(Integer.valueOf(64), squaredList.get(2));
     }
+
+    @Test
+    public void testReduce() {
+        final ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
+
+        int sum = arrayList.reduce(0, new Function2<Integer, Integer, Integer>() {
+
+            @Override
+            public Integer call(Integer result, Integer item) {
+                return result + item;
+            }
+        });
+
+        assertEquals(13, sum);
+    }
 }
