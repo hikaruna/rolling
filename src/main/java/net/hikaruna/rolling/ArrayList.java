@@ -14,6 +14,27 @@ public class ArrayList<E> extends java.util.ArrayList<E> {
     private static final long serialVersionUID = 1054066276178532545L;
 
     /**
+     * Constructs an empty list.
+     *
+     * @see java.util.ArrayList#ArrayList()
+     */
+    public ArrayList() {
+        super();
+    }
+
+    /**
+     * Constructs an empty list with the specified initial capacity.
+     *
+     * @param initialCapacity the initial capacity of the list
+     * @throws IllegalArgumentException if the specified initial capacity
+     *                                  is negative
+     * @see java.util.ArrayList#ArrayList(int)
+     */
+    public ArrayList(int initialCapacity) {
+        super(initialCapacity);
+    }
+
+    /**
      * {@link java.util.ArrayList#ArrayList(Collection)}と同じ.
      *
      * @param c the collection whose elements are to be placed into this list
