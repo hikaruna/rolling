@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="ProjectScope" pattern="!file[rolling]:gradlew.bat&amp;&amp;!file[rolling]:LICENSE.txt&amp;&amp;!file[rolling]:gradlew&amp;&amp;!file[rolling]:.classpath&amp;&amp;!file[rolling]:.project&amp;&amp;!file[rolling]:gradle/wrapper//*&amp;&amp;!file[rolling]:.gitignore" />
+</component>
