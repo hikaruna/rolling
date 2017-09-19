@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    compile 'net.hikaruna:rolling:1.0.0'
+    compile 'net.hikaruna:rolling:1.1.0'
 }
 
 ```
