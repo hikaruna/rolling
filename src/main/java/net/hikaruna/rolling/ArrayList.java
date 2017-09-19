@@ -9,7 +9,7 @@ import java.util.Collection;
  * @see java.util.ArrayList
  */
 @SuppressWarnings("WeakerAccess")
-public class ArrayList<E> extends java.util.ArrayList<E> {
+public class ArrayList<E> extends java.util.ArrayList<E> implements List<E> {
 
     private static final long serialVersionUID = 1054066276178532545L;
 
@@ -43,24 +43,14 @@ public class ArrayList<E> extends java.util.ArrayList<E> {
         super(c);
     }
 
-    /**
-     * 各要素に対してfunctionを評価します.
-     *
-     * @param function 評価内容
-     */
+    @Override
     public void each(@Nonnull final VoidFunction<E> function) {
         for (final E i : this) {
             function.call(i);
         }
     }
 
-    /**
-     * 各要素を順番に{@link Function}に渡して評価し、その結果で要素を置き換えた{@link ArrayList}を返します.
-     *
-     * @param function 評価内容
-     * @param <Ret>    評価結果の型
-     * @return 要素を置き換えた結果
-     */
+    @Override
     public <Ret> ArrayList<Ret> map(@Nonnull final Function<Ret, E> function) {
         final ArrayList<Ret> result = new ArrayList<>(size());
         for (final E i : this) {
@@ -69,14 +59,7 @@ public class ArrayList<E> extends java.util.ArrayList<E> {
         return result;
     }
 
-    /**
-     * 各要素を順番に{@link Function2}に渡して処理して集約し、その結果を返します
-     *
-     * @param init     最初のresultの値
-     * @param function 評価内容{@code function(Ret init, E item)}
-     * @param <Ret>    処理結果の型
-     * @return 集約した処理結果
-     */
+    @Override
     public <Ret> Ret reduce(@Nonnull final Ret init, @Nonnull final Function2<Ret, Ret, E> function) {
         Ret result = init;
         for (final E i : this) {
