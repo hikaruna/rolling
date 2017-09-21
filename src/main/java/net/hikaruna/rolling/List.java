@@ -1,5 +1,8 @@
 package net.hikaruna.rolling;
 
+import net.hikaruna.rolling.function.Function;
+import net.hikaruna.rolling.function.ThrowableFunction;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -11,8 +14,8 @@ import javax.annotation.Nonnull;
 public interface List<E> extends java.util.List<E>, Collection<E> {
 
     @Override
-    <R> List<R> map(@Nonnull final Function<R, E> function);
+    <R> List<R> map(@Nonnull Function<E, R> function);
 
     @Override
-    <R, T extends Throwable> List<R> map(@Nonnull final ThrowsFunction<R, E, T> function) throws T;
+    <R, Throws extends Throwable> List<R> map(@Nonnull ThrowableFunction<E, R, Throws> function) throws Throws;
 }

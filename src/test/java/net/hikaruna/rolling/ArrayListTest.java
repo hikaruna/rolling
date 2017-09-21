@@ -1,5 +1,9 @@
 package net.hikaruna.rolling;
 
+import net.hikaruna.rolling.function.BiFunction;
+import net.hikaruna.rolling.function.Consumer;
+import net.hikaruna.rolling.function.Function;
+import net.hikaruna.rolling.function.ThrowableFunction;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -22,18 +26,18 @@ public class ArrayListTest {
 
     @Test
     public void testConstructorWithC() {
-        Collection<Integer> c = new java.util.ArrayList<>();
+        final Collection<Integer> c = new java.util.ArrayList<>();
         assertEquals(new java.util.ArrayList<>(c), new ArrayList<>(c));
     }
 
     @Test
     public void testEach() {
-        ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
+        final ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
 
         final LinkedList<Integer> squaredList = new LinkedList<>();
-        arrayList.each(new VoidFunction<Integer>() {
+        arrayList.each(new Consumer<Integer>() {
             @Override
-            public void call(Integer integer) {
+            public void apply(final Integer integer) {
                 squaredList.add(integer * integer);
             }
         });
@@ -44,11 +48,11 @@ public class ArrayListTest {
 
     @Test
     public void testMap() {
-        ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
+        final ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
 
-        ArrayList<Integer> squaredList = arrayList.map(new Function<Integer, Integer>() {
+        final ArrayList<Integer> squaredList = arrayList.map(new Function<Integer, Integer>() {
             @Override
-            public Integer call(Integer integer) {
+            public Integer apply(final Integer integer) {
                 return integer * integer;
             }
         });
@@ -59,11 +63,11 @@ public class ArrayListTest {
 
     @Test(expected = TestException.class)
     public void testMapWithThrowsFunction() throws TestException {
-        ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
+        final ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
 
-        arrayList.map(new ThrowsFunction<Integer, Integer, TestException>() {
+        arrayList.map(new ThrowableFunction<Integer, Integer, TestException>() {
             @Override
-            public Integer call(Integer integer) throws TestException {
+            public Integer apply(final Integer integer) throws TestException {
                 throw new TestException();
             }
         });
@@ -71,12 +75,12 @@ public class ArrayListTest {
 
     @Test
     public void testReduce() {
-        ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
+        final ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
 
-        int sum = arrayList.reduce(0, new Function2<Integer, Integer, Integer>() {
+        final int sum = arrayList.reduce(0, new BiFunction<Integer, Integer, Integer>() {
 
             @Override
-            public Integer call(Integer result, Integer item) {
+            public Integer apply(final Integer result, final Integer item) {
                 return result + item;
             }
         });

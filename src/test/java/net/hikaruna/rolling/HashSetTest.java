@@ -1,10 +1,15 @@
 package net.hikaruna.rolling;
 
+import net.hikaruna.rolling.function.BiFunction;
+import net.hikaruna.rolling.function.Consumer;
+import net.hikaruna.rolling.function.Function;
+import net.hikaruna.rolling.function.ThrowableFunction;
 import org.junit.Test;
 
 import java.util.Arrays;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class HashSetTest {
 
@@ -15,14 +20,14 @@ public class HashSetTest {
 
     @Test
     public void testConstructorWithCapacity() {
-        int capacity = 3;
+        final int capacity = 3;
         assertEquals(new java.util.HashSet<Integer>(capacity), new HashSet<Integer>(capacity));
     }
 
     @Test
     public void testConstructorWithCapacityAndLoadFactor() {
-        int capacity = 3;
-        float loadFactor = 0.7f;
+        final int capacity = 3;
+        final float loadFactor = 0.7f;
         assertEquals(new java.util.HashSet<Integer>(capacity, loadFactor), new HashSet<Integer>(capacity, loadFactor));
     }
 
@@ -43,10 +48,10 @@ public class HashSetTest {
         final HashSet<Integer> hashSet = new HashSet<>(Arrays.asList(1, 4, 8));
         final Set<Integer> squaredSet = new HashSet<>();
 
-        hashSet.each(new VoidFunction<Integer>() {
+        hashSet.each(new Consumer<Integer>() {
 
             @Override
-            public void call(Integer item) {
+            public void apply(final Integer item) {
                 squaredSet.add(item * item);
             }
         });
@@ -61,7 +66,7 @@ public class HashSetTest {
 
         final Set<Integer> squaredSet = hashSet.map(new Function<Integer, Integer>() {
             @Override
-            public Integer call(Integer item) {
+            public Integer apply(final Integer item) {
                 return item * item;
             }
         });
@@ -74,9 +79,9 @@ public class HashSetTest {
     public void mapWithThrowsFunction() throws Exception {
         final HashSet<Integer> hashSet = new HashSet<>(Arrays.asList(1, 4, 8));
 
-        hashSet.map(new ThrowsFunction<Integer, Integer, TestException>() {
+        hashSet.map(new ThrowableFunction<Integer, Integer, TestException>() {
             @Override
-            public Integer call(Integer integer) throws TestException {
+            public Integer apply(final Integer integer) throws TestException {
                 throw new TestException();
             }
         });
@@ -86,9 +91,9 @@ public class HashSetTest {
     public void reduce() throws Exception {
         final HashSet<Integer> hashSet = new HashSet<>(Arrays.asList(1, 4, 8));
 
-        int sum = hashSet.reduce(0, new Function2<Integer, Integer, Integer>() {
+        final int sum = hashSet.reduce(0, new BiFunction<Integer, Integer, Integer>() {
             @Override
-            public Integer call(final Integer result, Integer item) {
+            public Integer apply(final Integer result, final Integer item) {
                 return result + item;
             }
         });
