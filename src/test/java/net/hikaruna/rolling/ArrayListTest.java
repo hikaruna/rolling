@@ -37,7 +37,7 @@ public class ArrayListTest {
         final LinkedList<Integer> squaredList = new LinkedList<>();
         arrayList.each(new Consumer<Integer>() {
             @Override
-            public void apply(final Integer integer) {
+            public void accept(final Integer integer) {
                 squaredList.add(integer * integer);
             }
         });

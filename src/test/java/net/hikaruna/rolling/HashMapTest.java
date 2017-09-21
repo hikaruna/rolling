@@ -47,7 +47,7 @@ public class HashMapTest {
 
         oneFourEight.each(new Consumer<Entry<Integer, String>>() {
             @Override
-            public void apply(final Entry<Integer, String> entry) {
+            public void accept(final Entry<Integer, String> entry) {
                 concat.append(entry.getKey());
                 concat.append(entry.getValue());
             }

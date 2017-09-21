@@ -49,9 +49,8 @@ public class HashSetTest {
         final Set<Integer> squaredSet = new HashSet<>();
 
         hashSet.each(new Consumer<Integer>() {
-
             @Override
-            public void apply(final Integer item) {
+            public void accept(final Integer item) {
                 squaredSet.add(item * item);
             }
         });

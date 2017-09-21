@@ -6,12 +6,18 @@ package net.hikaruna.rolling.function;
  * @param <T> オペレーションの入力の型
  */
 @SuppressWarnings("WeakerAccess")
-public interface Consumer<T> {
+public abstract class Consumer<T> implements Function<T, Void> {
 
     /**
      * 指定された引数でこのオペレーションを実行します。
      *
      * @param t 入力引数
      */
-    void apply(T t);
+    public abstract void accept(T t);
+
+    @Override
+    public Void apply(final T t) {
+        accept(t);
+        return null;
+    }
 }
