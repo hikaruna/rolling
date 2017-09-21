@@ -11,5 +11,8 @@ import javax.annotation.Nonnull;
 public interface Collection<E> extends java.util.Collection<E>, Enumerable<E> {
 
     @Override
-    <Ret> Collection<Ret> map(@Nonnull final Function<Ret, E> function);
+    <R> Collection<R> map(@Nonnull final Function<R, E> function);
+
+    @Override
+    <R, T extends Throwable> Collection<R> map(@Nonnull final ThrowsFunction<R, E, T> function) throws T;
 }

@@ -70,6 +70,18 @@ public class HashSetTest {
         assertTrue(squaredSet.containsAll(Arrays.asList(1, 16, 64)));
     }
 
+    @Test(expected = TestException.class)
+    public void mapWithThrowsFunction() throws Exception {
+        final HashSet<Integer> hashSet = new HashSet<>(Arrays.asList(1, 4, 8));
+
+        hashSet.map(new ThrowsFunction<Integer, Integer, TestException>() {
+            @Override
+            public Integer call(Integer integer) throws TestException {
+                throw new TestException();
+            }
+        });
+    }
+
     @Test
     public void reduce() throws Exception {
         final HashSet<Integer> hashSet = new HashSet<>(Arrays.asList(1, 4, 8));
