@@ -49,7 +49,12 @@ public class ArrayList<E> extends java.util.ArrayList<E> implements List<E> {
     }
 
     @Override
-    public void each(@Nonnull final Consumer<E> function) {
+    public void each(@Nonnull final Consumer<E> consumer) {
+        each((Function<E, Void>) consumer);
+    }
+
+    @Override
+    public void each(@Nonnull final Function<E, Void> function) {
         for (final E i : this) {
             function.apply(i);
         }
