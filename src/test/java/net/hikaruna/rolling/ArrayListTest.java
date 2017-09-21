@@ -22,13 +22,13 @@ public class ArrayListTest {
 
     @Test
     public void testConstructorWithC() {
-        final Collection<Integer> c = new java.util.ArrayList<>();
+        Collection<Integer> c = new java.util.ArrayList<>();
         assertEquals(new java.util.ArrayList<>(c), new ArrayList<>(c));
     }
 
     @Test
     public void testEach() {
-        final ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
+        ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
 
         final LinkedList<Integer> squaredList = new LinkedList<>();
         arrayList.each(new VoidFunction<Integer>() {
@@ -44,9 +44,9 @@ public class ArrayListTest {
 
     @Test
     public void testMap() {
-        final ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
+        ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
 
-        final ArrayList<Integer> squaredList = arrayList.map(new Function<Integer, Integer>() {
+        ArrayList<Integer> squaredList = arrayList.map(new Function<Integer, Integer>() {
             @Override
             public Integer call(Integer integer) {
                 return integer * integer;
@@ -57,9 +57,21 @@ public class ArrayListTest {
         assertEquals(Integer.valueOf(64), squaredList.get(2));
     }
 
+    @Test(expected = TestException.class)
+    public void testMapWithThrowsFunction() throws TestException {
+        ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
+
+        arrayList.map(new ThrowsFunction<Integer, Integer, TestException>() {
+            @Override
+            public Integer call(Integer integer) throws TestException {
+                throw new TestException();
+            }
+        });
+    }
+
     @Test
     public void testReduce() {
-        final ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
+        ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
 
         int sum = arrayList.reduce(0, new Function2<Integer, Integer, Integer>() {
 

@@ -14,4 +14,7 @@ public interface Map<K, V> extends java.util.Map<K, V>, Enumerable<Entry<K, V>> 
 
     @Override
     <R> List<R> map(@Nonnull final Function<R, Entry<K, V>> function);
+
+    @Override
+    <R, T extends Throwable> List<R> map(@Nonnull final ThrowsFunction<R, Entry<K, V>, T> function) throws T;
 }

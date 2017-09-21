@@ -6,8 +6,7 @@ package net.hikaruna.rolling;
  * @param <R> 返り値の型
  * @param <A> 引数の型
  */
-@SuppressWarnings("WeakerAccess")
-public interface Function<R, A> {
+public interface Function<R, A> extends ThrowsFunction<R, A, RuntimeException> {
 
     /**
      * Functionを評価する.
@@ -15,5 +14,6 @@ public interface Function<R, A> {
      * @param a 引数
      * @return 返り値
      */
+    @Override
     R call(A a);
 }

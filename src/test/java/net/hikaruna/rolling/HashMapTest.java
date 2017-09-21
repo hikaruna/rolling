@@ -72,6 +72,16 @@ public class HashMapTest {
         assertEquals("cccccccc", repeatList.get(2));
     }
 
+    @Test(expected = TestException.class)
+    public void testMapWithThrowsFunction() throws TestException {
+        createOneFourEight().map(new ThrowsFunction<String, Entry<Integer, String>, TestException>() {
+            @Override
+            public String call(Entry<Integer, String> integerStringEntry) throws TestException {
+                throw new TestException();
+            }
+        });
+    }
+
     @Test
     public void testReduce() {
         final String concat = createOneFourEight().map(new Function<String, Entry<Integer, String>>() {

@@ -12,4 +12,7 @@ public interface Collection<E> extends java.util.Collection<E>, Enumerable<E> {
 
     @Override
     <R> Collection<R> map(@Nonnull final Function<R, E> function);
+
+    @Override
+    <R, T extends Throwable> Collection<R> map(@Nonnull final ThrowsFunction<R, E, T> function) throws T;
 }

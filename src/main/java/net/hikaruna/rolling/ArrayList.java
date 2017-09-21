@@ -52,6 +52,11 @@ public class ArrayList<E> extends java.util.ArrayList<E> implements List<E> {
 
     @Override
     public <R> ArrayList<R> map(@Nonnull final Function<R, E> function) {
+        return map((ThrowsFunction<R, E, RuntimeException>) function);
+    }
+
+    @Override
+    public <R, T extends Throwable> ArrayList<R> map(@Nonnull final ThrowsFunction<R, E, T> function) throws T {
         final ArrayList<R> result = new ArrayList<>(size());
         for (final E i : this) {
             result.add(function.call(i));

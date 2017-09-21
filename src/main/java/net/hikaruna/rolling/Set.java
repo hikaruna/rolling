@@ -11,4 +11,7 @@ public interface Set<E> extends java.util.Set<E>, Collection<E> {
 
     @Override
     <R> Set<R> map(@Nonnull final Function<R, E> function);
+
+    @Override
+    <R, T extends Throwable> Set<R> map(@Nonnull final ThrowsFunction<R, E, T> function) throws T;
 }

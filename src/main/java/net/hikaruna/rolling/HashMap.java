@@ -61,6 +61,11 @@ public class HashMap<K, V> extends java.util.HashMap<K, V> implements Map<K, V> 
 
     @Override
     public <R> List<R> map(@Nonnull final Function<R, Entry<K, V>> function) {
+        return map((ThrowsFunction<R, Entry<K, V>, RuntimeException>) function);
+    }
+
+    @Override
+    public <R, T extends Throwable> List<R> map(@Nonnull final ThrowsFunction<R, Entry<K, V>, T> function) throws T {
         final ArrayList<R> result = new ArrayList<>(size());
         for (final Entry<K, V> i : entrySet()) {
             result.add(function.call(i));

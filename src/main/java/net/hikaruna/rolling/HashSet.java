@@ -66,6 +66,11 @@ public class HashSet<E> extends java.util.HashSet<E> implements Set<E> {
 
     @Override
     public <R> HashSet<R> map(@Nonnull final Function<R, E> function) {
+        return map((ThrowsFunction<R, E, RuntimeException>) function);
+    }
+
+    @Override
+    public <R, T extends Throwable> HashSet<R> map(@Nonnull final ThrowsFunction<R, E, T> function) throws T {
         final HashSet<R> result = new HashSet<>(size());
         for (final E item : this) {
             result.add(function.call(item));
