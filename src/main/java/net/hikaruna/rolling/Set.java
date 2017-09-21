@@ -10,5 +10,5 @@ import javax.annotation.Nonnull;
 public interface Set<E> extends java.util.Set<E>, Collection<E> {
 
     @Override
-    <Ret> Set<Ret> map(@Nonnull final Function<Ret, E> function);
+    <R> Set<R> map(@Nonnull final Function<R, E> function);
 }

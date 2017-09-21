@@ -3,15 +3,15 @@ package net.hikaruna.rolling;
 /**
  * 返り値がvoidのFunction.
  *
- * @param <Arg> 引数の型
+ * @param <A> 引数の型
  */
 @SuppressWarnings("WeakerAccess")
-public interface VoidFunction<Arg> {
+public interface VoidFunction<A> {
 
     /**
      * Functionを評価する.
      *
-     * @param arg 引数
+     * @param a 引数
      */
-    void call(Arg arg);
+    void call(A a);
 }

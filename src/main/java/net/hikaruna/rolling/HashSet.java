@@ -65,8 +65,8 @@ public class HashSet<E> extends java.util.HashSet<E> implements Set<E> {
     }
 
     @Override
-    public <Ret> HashSet<Ret> map(@Nonnull final Function<Ret, E> function) {
-        final HashSet<Ret> result = new HashSet<>(size());
+    public <R> HashSet<R> map(@Nonnull final Function<R, E> function) {
+        final HashSet<R> result = new HashSet<>(size());
         for (final E item : this) {
             result.add(function.call(item));
         }
@@ -74,8 +74,8 @@ public class HashSet<E> extends java.util.HashSet<E> implements Set<E> {
     }
 
     @Override
-    public <Ret> Ret reduce(@Nonnull final Ret init, @Nonnull final Function2<Ret, Ret, E> function) {
-        Ret result = init;
+    public <R> R reduce(@Nonnull final R init, @Nonnull final Function2<R, R, E> function) {
+        R result = init;
         for (final E item : this) {
             result = function.call(result, item);
         }

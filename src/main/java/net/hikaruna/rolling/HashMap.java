@@ -60,8 +60,8 @@ public class HashMap<K, V> extends java.util.HashMap<K, V> implements Map<K, V> 
     }
 
     @Override
-    public <Ret> List<Ret> map(@Nonnull final Function<Ret, Entry<K, V>> function) {
-        final ArrayList<Ret> result = new ArrayList<>(size());
+    public <R> List<R> map(@Nonnull final Function<R, Entry<K, V>> function) {
+        final ArrayList<R> result = new ArrayList<>(size());
         for (final Entry<K, V> i : entrySet()) {
             result.add(function.call(i));
         }
@@ -69,8 +69,8 @@ public class HashMap<K, V> extends java.util.HashMap<K, V> implements Map<K, V> 
     }
 
     @Override
-    public <Ret> Ret reduce(@Nonnull final Ret init, @Nonnull final Function2<Ret, Ret, Entry<K, V>> function) {
-        Ret result = init;
+    public <R> R reduce(@Nonnull final R init, @Nonnull final Function2<R, R, Entry<K, V>> function) {
+        R result = init;
         for (final Entry<K, V> i : entrySet()) {
             result = function.call(result, i);
         }
