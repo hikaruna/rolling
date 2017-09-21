@@ -17,9 +17,16 @@ public interface Enumerable<E> {
     /**
      * 各要素に対してfunctionを評価します.
      *
+     * @param consumer 評価内容
+     */
+    void each(@Nonnull Consumer<E> consumer);
+
+    /**
+     * {@link #each(Consumer)}と同じ.
+     *
      * @param function 評価内容
      */
-    void each(@Nonnull Consumer<E> function);
+    void each(@Nonnull Function<E, Void> function);
 
     /**
      * 各要素を順番に{@link Function}に渡して評価し、その結果で要素を置き換えたものを返します.

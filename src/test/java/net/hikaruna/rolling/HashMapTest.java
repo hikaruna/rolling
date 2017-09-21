@@ -40,7 +40,7 @@ public class HashMapTest {
     }
 
     @Test
-    public void testEach() {
+    public void testEachWithConsumer() {
         final Map<Integer, String> oneFourEight = createOneFourEight();
 
         final StringBuilder concat = new StringBuilder();
@@ -50,6 +50,24 @@ public class HashMapTest {
             public void accept(final Entry<Integer, String> entry) {
                 concat.append(entry.getKey());
                 concat.append(entry.getValue());
+            }
+        });
+
+        assertEquals("1a4b8c", concat.toString());
+    }
+
+    @Test
+    public void testEachWithFunction() {
+        final Map<Integer, String> oneFourEight = createOneFourEight();
+
+        final StringBuilder concat = new StringBuilder();
+
+        oneFourEight.each(new Function<Entry<Integer, String>, Void>() {
+            @Override
+            public Void apply(final Entry<Integer, String> entry) {
+                concat.append(entry.getKey());
+                concat.append(entry.getValue());
+                return null;
             }
         });
 

@@ -31,7 +31,7 @@ public class ArrayListTest {
     }
 
     @Test
-    public void testEach() {
+    public void testEachWithConsumer() {
         final ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
 
         final LinkedList<Integer> squaredList = new LinkedList<>();
@@ -39,6 +39,23 @@ public class ArrayListTest {
             @Override
             public void accept(final Integer integer) {
                 squaredList.add(integer * integer);
+            }
+        });
+        assertEquals(Integer.valueOf(1), squaredList.get(0));
+        assertEquals(Integer.valueOf(16), squaredList.get(1));
+        assertEquals(Integer.valueOf(64), squaredList.get(2));
+    }
+
+    @Test
+    public void testEachWithFunction() {
+        final ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
+
+        final LinkedList<Integer> squaredList = new LinkedList<>();
+        arrayList.each(new Function<Integer, Void>() {
+            @Override
+            public Void apply(final Integer integer) {
+                squaredList.add(integer * integer);
+                return null;
             }
         });
         assertEquals(Integer.valueOf(1), squaredList.get(0));

@@ -58,7 +58,12 @@ public class HashMap<K, V> extends java.util.HashMap<K, V> implements Map<K, V> 
     }
 
     @Override
-    public void each(@Nonnull final Consumer<Entry<K, V>> function) {
+    public void each(@Nonnull final Consumer<Entry<K, V>> consumer) {
+        each((Function<Entry<K, V>, Void>) consumer);
+    }
+
+    @Override
+    public void each(@Nonnull final Function<Entry<K, V>, Void> function) {
         for (final Entry<K, V> i : entrySet()) {
             function.apply(i);
         }

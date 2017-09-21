@@ -44,7 +44,7 @@ public class HashSetTest {
     }
 
     @Test
-    public void each() throws Exception {
+    public void testEachWithConsumer() throws Exception {
         final HashSet<Integer> hashSet = new HashSet<>(Arrays.asList(1, 4, 8));
         final Set<Integer> squaredSet = new HashSet<>();
 
@@ -52,6 +52,23 @@ public class HashSetTest {
             @Override
             public void accept(final Integer item) {
                 squaredSet.add(item * item);
+            }
+        });
+
+        assertEquals(3, squaredSet.size());
+        assertTrue(squaredSet.containsAll(Arrays.asList(1, 16, 64)));
+    }
+
+    @Test
+    public void testEachWithFunction() throws Exception {
+        final HashSet<Integer> hashSet = new HashSet<>(Arrays.asList(1, 4, 8));
+        final Set<Integer> squaredSet = new HashSet<>();
+
+        hashSet.each(new Function<Integer, Void>() {
+            @Override
+            public Void apply(final Integer item) {
+                squaredSet.add(item * item);
+                return null;
             }
         });
 

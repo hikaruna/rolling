@@ -63,7 +63,12 @@ public class HashSet<E> extends java.util.HashSet<E> implements Set<E> {
     }
 
     @Override
-    public void each(@Nonnull final Consumer<E> function) {
+    public void each(@Nonnull final Consumer<E> consumer) {
+        each((Function<E, Void>) consumer);
+    }
+
+    @Override
+    public void each(@Nonnull final Function<E, Void> function) {
         for (final E item : this) {
             function.apply(item);
         }
