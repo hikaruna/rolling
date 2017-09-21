@@ -1,5 +1,8 @@
 package net.hikaruna.rolling;
 
+import net.hikaruna.rolling.function.Function;
+import net.hikaruna.rolling.function.ThrowableFunction;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -10,8 +13,8 @@ import javax.annotation.Nonnull;
 public interface Set<E> extends java.util.Set<E>, Collection<E> {
 
     @Override
-    <R> Set<R> map(@Nonnull final Function<R, E> function);
+    <R> Set<R> map(@Nonnull Function<E, R> function);
 
     @Override
-    <R, T extends Throwable> Set<R> map(@Nonnull final ThrowsFunction<R, E, T> function) throws T;
+    <R, Throws extends Throwable> Set<R> map(@Nonnull ThrowableFunction<E, R, Throws> function) throws Throws;
 }

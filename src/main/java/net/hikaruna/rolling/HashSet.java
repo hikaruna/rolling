@@ -1,5 +1,10 @@
 package net.hikaruna.rolling;
 
+import net.hikaruna.rolling.function.BiFunction;
+import net.hikaruna.rolling.function.Consumer;
+import net.hikaruna.rolling.function.Function;
+import net.hikaruna.rolling.function.ThrowableFunction;
+
 import javax.annotation.Nonnull;
 
 /**
@@ -23,7 +28,7 @@ public class HashSet<E> extends java.util.HashSet<E> implements Set<E> {
      * @throws IllegalArgumentException if the initial capacity is less
      *                                  than zero
      */
-    public HashSet(int initialCapacity) {
+    public HashSet(final int initialCapacity) {
         super(initialCapacity);
     }
 
@@ -35,7 +40,7 @@ public class HashSet<E> extends java.util.HashSet<E> implements Set<E> {
      * @throws IllegalArgumentException if the initial capacity is less
      *                                  than zero, or if the load factor is non positive
      */
-    public HashSet(int initialCapacity, float loadFactor) {
+    public HashSet(final int initialCapacity, final float loadFactor) {
         super(initialCapacity, loadFactor);
     }
 
@@ -44,7 +49,7 @@ public class HashSet<E> extends java.util.HashSet<E> implements Set<E> {
      *
      * @param c the collection whose elements are to be placed into this set
      */
-    public HashSet(@Nonnull java.util.Collection<? extends E> c) {
+    public HashSet(@Nonnull final java.util.Collection<? extends E> c) {
         super(c);
     }
 
@@ -53,36 +58,36 @@ public class HashSet<E> extends java.util.HashSet<E> implements Set<E> {
      *
      * @param c the collection whose elements are to be placed into this set
      */
-    public HashSet(@Nonnull Collection<? extends E> c) {
+    public HashSet(@Nonnull final Collection<? extends E> c) {
         super(c);
     }
 
     @Override
-    public void each(@Nonnull final VoidFunction<E> function) {
+    public void each(@Nonnull final Consumer<E> function) {
         for (final E item : this) {
-            function.call(item);
+            function.apply(item);
         }
     }
 
     @Override
-    public <R> HashSet<R> map(@Nonnull final Function<R, E> function) {
-        return map((ThrowsFunction<R, E, RuntimeException>) function);
+    public <R> HashSet<R> map(@Nonnull final Function<E, R> function) {
+        return map((ThrowableFunction<E, R, RuntimeException>) function);
     }
 
     @Override
-    public <R, T extends Throwable> HashSet<R> map(@Nonnull final ThrowsFunction<R, E, T> function) throws T {
+    public <R, Throws extends Throwable> HashSet<R> map(@Nonnull final ThrowableFunction<E, R, Throws> function) throws Throws {
         final HashSet<R> result = new HashSet<>(size());
         for (final E item : this) {
-            result.add(function.call(item));
+            result.add(function.apply(item));
         }
         return result;
     }
 
     @Override
-    public <R> R reduce(@Nonnull final R init, @Nonnull final Function2<R, R, E> function) {
+    public <R> R reduce(@Nonnull final R init, @Nonnull final BiFunction<R, E, R> function) {
         R result = init;
         for (final E item : this) {
-            result = function.call(result, item);
+            result = function.apply(result, item);
         }
         return result;
     }

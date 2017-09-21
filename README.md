@@ -46,16 +46,18 @@ assertEquals(81, sum);
 
 ```
 import net.hikaruna.rolling.*;
+import net.hikaruna.rolling.function.*;
 
-ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
-int mapReduceResult = arrayList.map(new Function<Integer, Integer>() {
+final ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
+
+final int mapReduceResult = arrayList.map(new Function<Integer, Integer>() {
     @Override
-    public Integer call(Integer item) {
+    public Integer apply(final Integer item) {
         return item * item;
     }
-}).reduce(0, new Function2<Integer, Integer, Integer>() {
+}).reduce(0, new BiFunction<Integer, Integer, Integer>() {
     @Override
-    public Integer call(Integer result, Integer item) {
+    public Integer apply(final Integer result, final Integer item) {
         return result + item;
     }
 });

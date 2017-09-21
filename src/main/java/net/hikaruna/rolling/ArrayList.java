@@ -1,5 +1,10 @@
 package net.hikaruna.rolling;
 
+import net.hikaruna.rolling.function.BiFunction;
+import net.hikaruna.rolling.function.Consumer;
+import net.hikaruna.rolling.function.Function;
+import net.hikaruna.rolling.function.ThrowableFunction;
+
 import javax.annotation.Nonnull;
 import java.util.Collection;
 
@@ -30,7 +35,7 @@ public class ArrayList<E> extends java.util.ArrayList<E> implements List<E> {
      *                                  is negative
      * @see java.util.ArrayList#ArrayList(int)
      */
-    public ArrayList(int initialCapacity) {
+    public ArrayList(final int initialCapacity) {
         super(initialCapacity);
     }
 
@@ -44,31 +49,31 @@ public class ArrayList<E> extends java.util.ArrayList<E> implements List<E> {
     }
 
     @Override
-    public void each(@Nonnull final VoidFunction<E> function) {
+    public void each(@Nonnull final Consumer<E> function) {
         for (final E i : this) {
-            function.call(i);
+            function.apply(i);
         }
     }
 
     @Override
-    public <R> ArrayList<R> map(@Nonnull final Function<R, E> function) {
-        return map((ThrowsFunction<R, E, RuntimeException>) function);
+    public <R> ArrayList<R> map(@Nonnull final Function<E, R> function) {
+        return map((ThrowableFunction<E, R, RuntimeException>) function);
     }
 
     @Override
-    public <R, T extends Throwable> ArrayList<R> map(@Nonnull final ThrowsFunction<R, E, T> function) throws T {
+    public <R, Throws extends Throwable> ArrayList<R> map(@Nonnull final ThrowableFunction<E, R, Throws> function) throws Throws {
         final ArrayList<R> result = new ArrayList<>(size());
         for (final E i : this) {
-            result.add(function.call(i));
+            result.add(function.apply(i));
         }
         return result;
     }
 
     @Override
-    public <R> R reduce(@Nonnull final R init, @Nonnull final Function2<R, R, E> function) {
+    public <R> R reduce(@Nonnull final R init, @Nonnull final BiFunction<R, E, R> function) {
         R result = init;
         for (final E i : this) {
-            result = function.call(result, i);
+            result = function.apply(result, i);
         }
         return result;
     }

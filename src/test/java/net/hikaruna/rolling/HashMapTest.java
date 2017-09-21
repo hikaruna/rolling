@@ -1,12 +1,15 @@
 package net.hikaruna.rolling;
 
+import net.hikaruna.rolling.function.BiFunction;
+import net.hikaruna.rolling.function.Consumer;
+import net.hikaruna.rolling.function.Function;
+import net.hikaruna.rolling.function.ThrowableFunction;
 import org.junit.Test;
 
 import java.util.Map.Entry;
 
 import static org.junit.Assert.assertEquals;
 
-@SuppressWarnings("ALL")
 public class HashMapTest {
 
     @Test
@@ -42,9 +45,9 @@ public class HashMapTest {
 
         final StringBuilder concat = new StringBuilder();
 
-        oneFourEight.each(new VoidFunction<Entry<Integer, String>>() {
+        oneFourEight.each(new Consumer<Entry<Integer, String>>() {
             @Override
-            public void call(Entry<Integer, String> entry) {
+            public void apply(final Entry<Integer, String> entry) {
                 concat.append(entry.getKey());
                 concat.append(entry.getValue());
             }
@@ -55,9 +58,9 @@ public class HashMapTest {
 
     @Test
     public void testMap() {
-        final List<String> repeatList = createOneFourEight().map(new Function<String, Entry<Integer, String>>() {
+        final List<String> repeatList = createOneFourEight().map(new Function<Entry<Integer, String>, String>() {
             @Override
-            public String call(Entry<Integer, String> entry) {
+            public String apply(final Entry<Integer, String> entry) {
                 final StringBuilder sb = new StringBuilder();
                 for (int i = 0; i < entry.getKey(); i++) {
                     sb.append(entry.getValue());
@@ -74,9 +77,9 @@ public class HashMapTest {
 
     @Test(expected = TestException.class)
     public void testMapWithThrowsFunction() throws TestException {
-        createOneFourEight().map(new ThrowsFunction<String, Entry<Integer, String>, TestException>() {
+        createOneFourEight().map(new ThrowableFunction<Entry<Integer, String>, String, TestException>() {
             @Override
-            public String call(Entry<Integer, String> integerStringEntry) throws TestException {
+            public String apply(final Entry<Integer, String> integerStringEntry) throws TestException {
                 throw new TestException();
             }
         });
@@ -84,18 +87,18 @@ public class HashMapTest {
 
     @Test
     public void testReduce() {
-        final String concat = createOneFourEight().map(new Function<String, Entry<Integer, String>>() {
+        final String concat = createOneFourEight().map(new Function<Entry<Integer, String>, String>() {
             @Override
-            public String call(Entry<Integer, String> entry) {
+            public String apply(final Entry<Integer, String> entry) {
                 final StringBuilder sb = new StringBuilder();
                 for (int i = 0; i < entry.getKey(); i++) {
                     sb.append(entry.getValue());
                 }
                 return sb.toString();
             }
-        }).reduce("", new Function2<String, String, String>() {
+        }).reduce("", new BiFunction<String, String, String>() {
             @Override
-            public String call(String result, String item) {
+            public String apply(final String result, final String item) {
                 return result + item;
             }
         });
