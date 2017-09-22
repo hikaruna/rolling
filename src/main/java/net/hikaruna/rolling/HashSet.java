@@ -95,6 +95,10 @@ public class HashSet<E> extends java.util.HashSet<E> implements Set<E> {
         return reduce(init, (BiFunction<R, E, R>) reducer);
     }
 
+    public <R, Throws extends Throwable> R reduce(@Nonnull final R init, @Nonnull final ThrowableReducer<E, R, Throws> reducer) throws Throws {
+        return reduce(init, (ThrowableBiFunction<R, E, R, Throws>) reducer);
+    }
+
     @Override
     public <R> R reduce(@Nonnull final R init, @Nonnull final BiFunction<R, E, R> function) {
         return reduce(init, (ThrowableBiFunction<R, E, R, RuntimeException>) function);

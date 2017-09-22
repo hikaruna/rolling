@@ -73,8 +73,8 @@ public class HashSetTest {
         assertTrue(squaredSet.containsAll(Arrays.asList(1, 16, 64)));
     }
 
-    @Test
-    public void testEachWithThrowableFunction() throws Exception {
+    @Test(expected = TestException.class)
+    public void testEachWithThrowableFunction() throws TestException {
         final HashSet<Integer> hashSet = new HashSet<>(Arrays.asList(1, 4, 8));
 
         hashSet.each(new ThrowableFunction<Integer, Void, TestException>() {
@@ -113,7 +113,7 @@ public class HashSetTest {
     }
 
     @Test
-    public void testReduceWithReducer() throws Exception {
+    public void testReduceWithReducer() {
         final HashSet<Integer> hashSet = new HashSet<>(Arrays.asList(1, 4, 8));
 
         final int sum = hashSet.reduce(0, new Enumerable.Reducer<Integer, Integer>() {
@@ -124,6 +124,18 @@ public class HashSetTest {
         });
 
         assertEquals(13, sum);
+    }
+
+    @Test(expected = TestException.class)
+    public void testReduceWithThrowableReducer() throws TestException {
+        final HashSet<Integer> hashSet = new HashSet<>(Arrays.asList(1, 4, 8));
+
+        hashSet.reduce(0, new Enumerable.ThrowableReducer<Integer, Integer, TestException>() {
+            @Override
+            public Integer apply(final Integer result, final Integer item) throws TestException {
+                throw new TestException();
+            }
+        });
     }
 
     @Test
@@ -147,7 +159,7 @@ public class HashSetTest {
         hashSet.reduce(0, new ThrowableBiFunction<Integer, Integer, Integer, TestException>() {
             @Override
             public Integer apply(final Integer integer, final Integer integer2) throws TestException {
-                throw new RuntimeException();
+                throw new TestException();
             }
         });
     }

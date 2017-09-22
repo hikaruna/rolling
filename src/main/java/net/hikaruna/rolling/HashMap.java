@@ -90,6 +90,10 @@ public class HashMap<K, V> extends java.util.HashMap<K, V> implements Map<K, V> 
         return reduce(init, (BiFunction<R, Entry<K, V>, R>) reducer);
     }
 
+    public <R, Throws extends Throwable> R reduce(@Nonnull final R init, @Nonnull final ThrowableReducer<Entry<K, V>, R, Throws> reducer) throws Throws {
+        return reduce(init, (ThrowableBiFunction<R, Entry<K, V>, R, Throws>) reducer);
+    }
+
     @Override
     public <R> R reduce(@Nonnull final R init, @Nonnull final BiFunction<R, Entry<K, V>, R> function) {
         return reduce(init, (ThrowableBiFunction<R, Entry<K, V>, R, RuntimeException>) function);

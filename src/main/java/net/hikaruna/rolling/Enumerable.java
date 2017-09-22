@@ -65,6 +65,18 @@ public interface Enumerable<E> {
     <R> R reduce(@Nonnull final R init, @Nonnull Reducer<E, R> reducer);
 
     /**
+     * {@link #reduce(Object, Reducer)}の例外を投げられる版.
+     *
+     * @param init     最初のresultの値
+     * @param reducer  評価内容
+     * @param <R>      処理結果の型
+     * @param <Throws> 例外の型
+     * @return 集約した処理結果
+     * @throws Throws 評価中に投げられた例外をそのままreThrowしたもの
+     */
+    <R, Throws extends Throwable> R reduce(@Nonnull final R init, @Nonnull ThrowableReducer<E, R, Throws> reducer) throws Throws;
+
+    /**
      * {@link #reduce(Object, Reducer)}と同じ.
      *
      * @param init     最初のresultの値
@@ -82,6 +94,7 @@ public interface Enumerable<E> {
      * @param <R>      処理結果の型
      * @param <Throws> 例外の型
      * @return 集約した処理結果
+     * @throws Throws 評価中に投げられた例外をそのままreThrowしたもの
      */
     <R, Throws extends Throwable> R reduce(@Nonnull final R init, @Nonnull final ThrowableBiFunction<R, E, R, Throws> function) throws Throws;
 
@@ -91,7 +104,7 @@ public interface Enumerable<E> {
      * @param <T> 扱う対象の要素の型
      * @param <R> Reduce処理結果の型
      */
-    interface Reducer<T, R> extends BiFunction<R, T, R> {
+    interface Reducer<T, R> extends BiFunction<R, T, R>, ThrowableReducer<T, R, RuntimeException> {
 
         /**
          * Reduce処理のための各要素毎に行う処理を実行する.
@@ -102,5 +115,26 @@ public interface Enumerable<E> {
          */
         @Override
         R apply(final R result, T item);
+    }
+
+    /**
+     * 例外を投げる可能性のある, Reduce処理のための各要素毎に行う処理.
+     *
+     * @param <T>      扱う対象の要素の型
+     * @param <R>      Reduce処理結果の型
+     * @param <Throws> 例外の型
+     */
+    interface ThrowableReducer<T, R, Throws extends Throwable> extends ThrowableBiFunction<R, T, R, Throws> {
+
+        /**
+         * Reduce処理のための各要素毎に行う処理を実行する.
+         *
+         * @param result 前の処理までの結果, この値を書き換える必要はない
+         * @param item   今回の処理で扱う要素
+         * @return 今回の処理後の結果, これは次の処理のresultに渡される
+         * @throws Throws 投げられる可能性のある例外
+         */
+        @Override
+        R apply(final R result, T item) throws Throws;
     }
 }

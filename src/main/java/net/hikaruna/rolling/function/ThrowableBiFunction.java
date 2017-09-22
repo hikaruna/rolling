@@ -18,5 +18,5 @@ public interface ThrowableBiFunction<T, U, R, Throws extends Throwable> {
      * @return 関数の結果
      * @throws Throws 投げられる可能性のある例外
      */
-    R apply(T t, U u) throws Throws;
+    R apply(@SuppressWarnings("unused") T t, @SuppressWarnings("unused") U u) throws Throws;
 }

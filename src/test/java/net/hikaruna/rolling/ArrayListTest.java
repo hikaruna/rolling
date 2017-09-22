@@ -113,6 +113,18 @@ public class ArrayListTest {
         assertEquals(13, sum);
     }
 
+    @Test(expected = TestException.class)
+    public void testReduceWithThrowableReducer() throws TestException {
+        final ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
+
+        arrayList.reduce(0, new Enumerable.ThrowableReducer<Integer, Integer, TestException>() {
+            @Override
+            public Integer apply(final Integer result, final Integer item) throws TestException {
+                throw new TestException();
+            }
+        });
+    }
+
     @Test
     public void testReduceWithBiFunction() {
         final ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
@@ -132,7 +144,7 @@ public class ArrayListTest {
     public void testReduceWithThrowableBiFunction() throws TestException {
         final ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
 
-        final int sum = arrayList.reduce(0, new ThrowableBiFunction<Integer, Integer, Integer, TestException>() {
+        arrayList.reduce(0, new ThrowableBiFunction<Integer, Integer, Integer, TestException>() {
             @Override
             public Integer apply(final Integer result, final Integer item) throws TestException {
                 throw new TestException();
