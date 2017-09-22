@@ -84,6 +84,11 @@ public class HashMap<K, V> extends java.util.HashMap<K, V> implements Map<K, V> 
     }
 
     @Override
+    public <R> R reduce(@Nonnull final R init, @Nonnull final Reducer<Entry<K, V>, R> reducer) {
+        return reduce(init, (BiFunction<R, Entry<K, V>, R>) reducer);
+    }
+
+    @Override
     public <R> R reduce(@Nonnull final R init, @Nonnull final BiFunction<R, Entry<K, V>, R> function) {
         R result = init;
         for (final Entry<K, V> i : entrySet()) {

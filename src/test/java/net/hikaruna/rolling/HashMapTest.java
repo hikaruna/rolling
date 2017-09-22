@@ -104,7 +104,29 @@ public class HashMapTest {
     }
 
     @Test
-    public void testReduce() {
+    public void testReduceWithReducer() {
+        final String concat = createOneFourEight().map(new Function<Entry<Integer, String>, String>() {
+            @Override
+            public String apply(final Entry<Integer, String> entry) {
+                final StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < entry.getKey(); i++) {
+                    sb.append(entry.getValue());
+                }
+                return sb.toString();
+            }
+        }).reduce("", new Enumerable.Reducer<String, String>() {
+            @Override
+            public String apply(final String result, final String item) {
+                return result + item;
+            }
+        });
+
+        //noinspection SpellCheckingInspection
+        assertEquals("abbbbcccccccc", concat);
+    }
+
+    @Test
+    public void testReduceWithBiFunction() {
         final String concat = createOneFourEight().map(new Function<Entry<Integer, String>, String>() {
             @Override
             public String apply(final Entry<Integer, String> entry) {

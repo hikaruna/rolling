@@ -104,7 +104,21 @@ public class HashSetTest {
     }
 
     @Test
-    public void reduce() throws Exception {
+    public void testReduceWithReducer() throws Exception {
+        final HashSet<Integer> hashSet = new HashSet<>(Arrays.asList(1, 4, 8));
+
+        final int sum = hashSet.reduce(0, new Enumerable.Reducer<Integer, Integer>() {
+            @Override
+            public Integer apply(final Integer result, final Integer item) {
+                return result + item;
+            }
+        });
+
+        assertEquals(13, sum);
+    }
+
+    @Test
+    public void testReduceWithBiFunction() throws Exception {
         final HashSet<Integer> hashSet = new HashSet<>(Arrays.asList(1, 4, 8));
 
         final int sum = hashSet.reduce(0, new BiFunction<Integer, Integer, Integer>() {

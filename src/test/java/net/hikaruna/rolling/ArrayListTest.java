@@ -91,7 +91,21 @@ public class ArrayListTest {
     }
 
     @Test
-    public void testReduce() {
+    public void testReduceWithReducer() {
+        final ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
+
+        final int sum = arrayList.reduce(0, new Enumerable.Reducer<Integer, Integer>() {
+            @Override
+            public Integer apply(final Integer result, final Integer item) {
+                return result + item;
+            }
+        });
+
+        assertEquals(13, sum);
+    }
+
+    @Test
+    public void testReduceWithBiFunction() {
         final ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
 
         final int sum = arrayList.reduce(0, new BiFunction<Integer, Integer, Integer>() {
