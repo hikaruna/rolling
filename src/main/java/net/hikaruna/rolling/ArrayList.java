@@ -1,9 +1,6 @@
 package net.hikaruna.rolling;
 
-import net.hikaruna.rolling.function.BiFunction;
-import net.hikaruna.rolling.function.Consumer;
-import net.hikaruna.rolling.function.Function;
-import net.hikaruna.rolling.function.ThrowableFunction;
+import net.hikaruna.rolling.function.*;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
@@ -86,6 +83,11 @@ public class ArrayList<E> extends java.util.ArrayList<E> implements List<E> {
 
     @Override
     public <R> R reduce(@Nonnull final R init, @Nonnull final BiFunction<R, E, R> function) {
+        return reduce(init, (ThrowableBiFunction<R, E, R, RuntimeException>) function);
+    }
+
+    @Override
+    public <R, Throws extends Throwable> R reduce(@Nonnull final R init, @Nonnull final ThrowableBiFunction<R, E, R, Throws> function) throws Throws {
         R result = init;
         for (final E i : this) {
             result = function.apply(result, i);

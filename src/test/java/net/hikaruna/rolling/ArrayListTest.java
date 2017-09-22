@@ -1,9 +1,6 @@
 package net.hikaruna.rolling;
 
-import net.hikaruna.rolling.function.BiFunction;
-import net.hikaruna.rolling.function.Consumer;
-import net.hikaruna.rolling.function.Function;
-import net.hikaruna.rolling.function.ThrowableFunction;
+import net.hikaruna.rolling.function.*;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -129,5 +126,17 @@ public class ArrayListTest {
         });
 
         assertEquals(13, sum);
+    }
+
+    @Test(expected = TestException.class)
+    public void testReduceWithThrowableBiFunction() throws TestException {
+        final ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
+
+        final int sum = arrayList.reduce(0, new ThrowableBiFunction<Integer, Integer, Integer, TestException>() {
+            @Override
+            public Integer apply(final Integer result, final Integer item) throws TestException {
+                throw new TestException();
+            }
+        });
     }
 }

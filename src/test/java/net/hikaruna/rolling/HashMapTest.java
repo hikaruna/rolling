@@ -159,6 +159,17 @@ public class HashMapTest {
         assertEquals("abbbbcccccccc", concat);
     }
 
+
+    @Test(expected = TestException.class)
+    public void testReduceWithThrowableBiFunction() throws TestException {
+        createOneFourEight().map(new ThrowableFunction<Entry<Integer, String>, String, TestException>() {
+            @Override
+            public String apply(final Entry<Integer, String> integerStringEntry) throws TestException {
+                throw new TestException();
+            }
+        });
+    }
+
     private Map<Integer, String> createOneFourEight() {
         final HashMap<Integer, String> oneFourEight = new HashMap<>();
         oneFourEight.put(1, "a");

@@ -1,9 +1,6 @@
 package net.hikaruna.rolling;
 
-import net.hikaruna.rolling.function.BiFunction;
-import net.hikaruna.rolling.function.Consumer;
-import net.hikaruna.rolling.function.Function;
-import net.hikaruna.rolling.function.ThrowableFunction;
+import net.hikaruna.rolling.function.*;
 
 import javax.annotation.Nonnull;
 
@@ -76,6 +73,17 @@ public interface Enumerable<E> {
      * @return 集約した処理結果
      */
     <R> R reduce(@Nonnull final R init, @Nonnull BiFunction<R, E, R> function);
+
+    /**
+     * {@link #reduce(Object, Reducer)}の例外を投げられる版.
+     *
+     * @param init     最初のresultの値
+     * @param function 評価内容
+     * @param <R>      処理結果の型
+     * @param <Throws> 例外の型
+     * @return 集約した処理結果
+     */
+    <R, Throws extends Throwable> R reduce(@Nonnull final R init, @Nonnull final ThrowableBiFunction<R, E, R, Throws> function) throws Throws;
 
     /**
      * Reduce処理のための各要素毎に行う処理.

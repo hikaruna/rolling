@@ -1,9 +1,6 @@
 package net.hikaruna.rolling;
 
-import net.hikaruna.rolling.function.BiFunction;
-import net.hikaruna.rolling.function.Consumer;
-import net.hikaruna.rolling.function.Function;
-import net.hikaruna.rolling.function.ThrowableFunction;
+import net.hikaruna.rolling.function.*;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -130,7 +127,7 @@ public class HashSetTest {
     }
 
     @Test
-    public void testReduceWithBiFunction() throws Exception {
+    public void testReduceWithBiFunction() {
         final HashSet<Integer> hashSet = new HashSet<>(Arrays.asList(1, 4, 8));
 
         final int sum = hashSet.reduce(0, new BiFunction<Integer, Integer, Integer>() {
@@ -141,5 +138,17 @@ public class HashSetTest {
         });
 
         assertEquals(13, sum);
+    }
+
+    @Test(expected = TestException.class)
+    public void testReduceWithThrowableBiFunction() throws TestException {
+        final HashSet<Integer> hashSet = new HashSet<>(Arrays.asList(1, 4, 8));
+
+        hashSet.reduce(0, new ThrowableBiFunction<Integer, Integer, Integer, TestException>() {
+            @Override
+            public Integer apply(final Integer integer, final Integer integer2) throws TestException {
+                throw new RuntimeException();
+            }
+        });
     }
 }
