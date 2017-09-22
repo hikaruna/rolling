@@ -75,6 +75,11 @@ public class ArrayList<E> extends java.util.ArrayList<E> implements List<E> {
     }
 
     @Override
+    public <R> R reduce(@Nonnull final R init, @Nonnull final Reducer<E, R> reducer) {
+        return reduce(init, (BiFunction<R, E, R>) reducer);
+    }
+
+    @Override
     public <R> R reduce(@Nonnull final R init, @Nonnull final BiFunction<R, E, R> function) {
         R result = init;
         for (final E i : this) {

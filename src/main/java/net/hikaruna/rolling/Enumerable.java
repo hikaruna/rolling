@@ -49,12 +49,41 @@ public interface Enumerable<E> {
     <R, Throws extends Throwable> Enumerable<R> map(@Nonnull ThrowableFunction<E, R, Throws> function) throws Throws;
 
     /**
-     * 各要素を{@link BiFunction}に渡して処理して集約し、その結果を返します
+     * 各要素を引数に指定された関数に渡して処理して集約し、その結果を返します
+     *
+     * @param init    最初のresultの値
+     * @param reducer 評価内容
+     * @param <R>     処理結果の型
+     * @return 集約した処理結果
+     */
+    <R> R reduce(@Nonnull final R init, @Nonnull Reducer<E, R> reducer);
+
+    /**
+     * {@link #reduce(Object, Reducer)}と同じ.
      *
      * @param init     最初のresultの値
-     * @param function 評価内容{@code function(R init, E item)}
+     * @param function 評価内容
      * @param <R>      処理結果の型
      * @return 集約した処理結果
      */
-    <R> R reduce(@Nonnull R init, @Nonnull BiFunction<R, E, R> function);
+    <R> R reduce(@Nonnull final R init, @Nonnull BiFunction<R, E, R> function);
+
+    /**
+     * Reduce処理のための各要素毎に行う処理.
+     *
+     * @param <T> 扱う対象の要素の型
+     * @param <R> Reduce処理結果の型
+     */
+    interface Reducer<T, R> extends BiFunction<R, T, R> {
+
+        /**
+         * Reduce処理のための各要素毎に行う処理を実行する.
+         *
+         * @param result 前の処理までの結果, この値を書き換える必要はない
+         * @param item   今回の処理で扱う要素
+         * @return 今回の処理後の結果, これは次の処理のresultに渡される
+         */
+        @Override
+        R apply(final R result, T item);
+    }
 }
