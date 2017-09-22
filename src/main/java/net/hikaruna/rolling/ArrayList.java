@@ -55,6 +55,11 @@ public class ArrayList<E> extends java.util.ArrayList<E> implements List<E> {
 
     @Override
     public void each(@Nonnull final Function<E, Void> function) {
+        each((ThrowableFunction<E, Void, RuntimeException>) function);
+    }
+
+    @Override
+    public <Throws extends Throwable> void each(@Nonnull final ThrowableFunction<E, Void, Throws> function) throws Throws {
         for (final E i : this) {
             function.apply(i);
         }

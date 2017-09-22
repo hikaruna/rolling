@@ -29,6 +29,15 @@ public interface Enumerable<E> {
     void each(@Nonnull Function<E, Void> function);
 
     /**
+     * {@link #each(Function)}の例外を投げられる版.
+     *
+     * @param function 評価内容
+     * @param <Throws> 例外の型
+     * @throws Throws 評価中に投げられた例外をそのままreThrowしたもの
+     */
+    <Throws extends Throwable> void each(@Nonnull ThrowableFunction<E, Void, Throws> function) throws Throws;
+
+    /**
      * 各要素を順番に{@link Function}に渡して評価し、その結果で要素を置き換えたものを返します.
      *
      * @param function 評価内容

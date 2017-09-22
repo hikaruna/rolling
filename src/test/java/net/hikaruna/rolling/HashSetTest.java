@@ -77,6 +77,18 @@ public class HashSetTest {
     }
 
     @Test
+    public void testEachWithThrowableFunction() throws Exception {
+        final HashSet<Integer> hashSet = new HashSet<>(Arrays.asList(1, 4, 8));
+
+        hashSet.each(new ThrowableFunction<Integer, Void, TestException>() {
+            @Override
+            public Void apply(final Integer item) throws TestException {
+                throw new TestException();
+            }
+        });
+    }
+
+    @Test
     public void map() throws Exception {
         final HashSet<Integer> hashSet = new HashSet<>(Arrays.asList(1, 4, 8));
 

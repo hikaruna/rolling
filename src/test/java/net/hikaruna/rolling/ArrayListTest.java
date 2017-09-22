@@ -63,6 +63,18 @@ public class ArrayListTest {
         assertEquals(Integer.valueOf(64), squaredList.get(2));
     }
 
+    @Test(expected = TestException.class)
+    public void testEachWithThrowableFunction() throws TestException {
+        final ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
+
+        arrayList.each(new ThrowableFunction<Integer, Void, TestException>() {
+            @Override
+            public Void apply(final Integer integer) throws TestException {
+                throw new TestException();
+            }
+        });
+    }
+
     @Test
     public void testMap() {
         final ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));

@@ -69,6 +69,11 @@ public class HashSet<E> extends java.util.HashSet<E> implements Set<E> {
 
     @Override
     public void each(@Nonnull final Function<E, Void> function) {
+        each((ThrowableFunction<E, Void, RuntimeException>) function);
+    }
+
+    @Override
+    public <Throws extends Throwable> void each(@Nonnull final ThrowableFunction<E, Void, Throws> function) throws Throws {
         for (final E item : this) {
             function.apply(item);
         }

@@ -74,6 +74,18 @@ public class HashMapTest {
         assertEquals("1a4b8c", concat.toString());
     }
 
+    @Test(expected = TestException.class)
+    public void testEachWithThrowableFunction() throws TestException {
+        final Map<Integer, String> oneFourEight = createOneFourEight();
+
+        oneFourEight.each(new ThrowableFunction<Entry<Integer, String>, Void, TestException>() {
+            @Override
+            public Void apply(final Entry<Integer, String> integerStringEntry) throws TestException {
+                throw new TestException();
+            }
+        });
+    }
+
     @Test
     public void testMap() {
         final List<String> repeatList = createOneFourEight().map(new Function<Entry<Integer, String>, String>() {

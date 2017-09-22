@@ -17,5 +17,5 @@ public interface BiFunction<T, U, R> {
      * @param u 関数の第2引数
      * @return 関数の結果
      */
-    R apply(T t, U u);
+    R apply(@SuppressWarnings("unused") T t, @SuppressWarnings("unused") U u);
 }
