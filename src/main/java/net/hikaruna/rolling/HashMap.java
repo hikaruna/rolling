@@ -1,9 +1,6 @@
 package net.hikaruna.rolling;
 
-import net.hikaruna.rolling.function.BiFunction;
-import net.hikaruna.rolling.function.Consumer;
-import net.hikaruna.rolling.function.Function;
-import net.hikaruna.rolling.function.ThrowableFunction;
+import net.hikaruna.rolling.function.*;
 
 import javax.annotation.Nonnull;
 import java.util.Map.Entry;
@@ -64,6 +61,11 @@ public class HashMap<K, V> extends java.util.HashMap<K, V> implements Map<K, V> 
 
     @Override
     public void each(@Nonnull final Function<Entry<K, V>, Void> function) {
+        each((ThrowableFunction<Entry<K, V>, Void, RuntimeException>) function);
+    }
+
+    @Override
+    public <Throws extends Throwable> void each(@Nonnull final ThrowableFunction<Entry<K, V>, Void, Throws> function) throws Throws {
         for (final Entry<K, V> i : entrySet()) {
             function.apply(i);
         }
@@ -88,8 +90,17 @@ public class HashMap<K, V> extends java.util.HashMap<K, V> implements Map<K, V> 
         return reduce(init, (BiFunction<R, Entry<K, V>, R>) reducer);
     }
 
+    public <R, Throws extends Throwable> R reduce(@Nonnull final R init, @Nonnull final ThrowableReducer<Entry<K, V>, R, Throws> reducer) throws Throws {
+        return reduce(init, (ThrowableBiFunction<R, Entry<K, V>, R, Throws>) reducer);
+    }
+
     @Override
     public <R> R reduce(@Nonnull final R init, @Nonnull final BiFunction<R, Entry<K, V>, R> function) {
+        return reduce(init, (ThrowableBiFunction<R, Entry<K, V>, R, RuntimeException>) function);
+    }
+
+    @Override
+    public <R, Throws extends Throwable> R reduce(@Nonnull final R init, @Nonnull final ThrowableBiFunction<R, Entry<K, V>, R, Throws> function) throws Throws {
         R result = init;
         for (final Entry<K, V> i : entrySet()) {
             result = function.apply(result, i);

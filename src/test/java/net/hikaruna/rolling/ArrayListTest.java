@@ -1,9 +1,6 @@
 package net.hikaruna.rolling;
 
-import net.hikaruna.rolling.function.BiFunction;
-import net.hikaruna.rolling.function.Consumer;
-import net.hikaruna.rolling.function.Function;
-import net.hikaruna.rolling.function.ThrowableFunction;
+import net.hikaruna.rolling.function.*;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -63,6 +60,18 @@ public class ArrayListTest {
         assertEquals(Integer.valueOf(64), squaredList.get(2));
     }
 
+    @Test(expected = TestException.class)
+    public void testEachWithThrowableFunction() throws TestException {
+        final ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
+
+        arrayList.each(new ThrowableFunction<Integer, Void, TestException>() {
+            @Override
+            public Void apply(final Integer integer) throws TestException {
+                throw new TestException();
+            }
+        });
+    }
+
     @Test
     public void testMap() {
         final ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
@@ -104,6 +113,18 @@ public class ArrayListTest {
         assertEquals(13, sum);
     }
 
+    @Test(expected = TestException.class)
+    public void testReduceWithThrowableReducer() throws TestException {
+        final ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
+
+        arrayList.reduce(0, new Enumerable.ThrowableReducer<Integer, Integer, TestException>() {
+            @Override
+            public Integer apply(final Integer result, final Integer item) throws TestException {
+                throw new TestException();
+            }
+        });
+    }
+
     @Test
     public void testReduceWithBiFunction() {
         final ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
@@ -117,5 +138,17 @@ public class ArrayListTest {
         });
 
         assertEquals(13, sum);
+    }
+
+    @Test(expected = TestException.class)
+    public void testReduceWithThrowableBiFunction() throws TestException {
+        final ArrayList<Integer> arrayList = new ArrayList<>(Arrays.asList(1, 4, 8));
+
+        arrayList.reduce(0, new ThrowableBiFunction<Integer, Integer, Integer, TestException>() {
+            @Override
+            public Integer apply(final Integer result, final Integer item) throws TestException {
+                throw new TestException();
+            }
+        });
     }
 }

@@ -1,9 +1,6 @@
 package net.hikaruna.rolling;
 
-import net.hikaruna.rolling.function.BiFunction;
-import net.hikaruna.rolling.function.Consumer;
-import net.hikaruna.rolling.function.Function;
-import net.hikaruna.rolling.function.ThrowableFunction;
+import net.hikaruna.rolling.function.*;
 
 import javax.annotation.Nonnull;
 
@@ -69,6 +66,11 @@ public class HashSet<E> extends java.util.HashSet<E> implements Set<E> {
 
     @Override
     public void each(@Nonnull final Function<E, Void> function) {
+        each((ThrowableFunction<E, Void, RuntimeException>) function);
+    }
+
+    @Override
+    public <Throws extends Throwable> void each(@Nonnull final ThrowableFunction<E, Void, Throws> function) throws Throws {
         for (final E item : this) {
             function.apply(item);
         }
@@ -93,8 +95,17 @@ public class HashSet<E> extends java.util.HashSet<E> implements Set<E> {
         return reduce(init, (BiFunction<R, E, R>) reducer);
     }
 
+    public <R, Throws extends Throwable> R reduce(@Nonnull final R init, @Nonnull final ThrowableReducer<E, R, Throws> reducer) throws Throws {
+        return reduce(init, (ThrowableBiFunction<R, E, R, Throws>) reducer);
+    }
+
     @Override
     public <R> R reduce(@Nonnull final R init, @Nonnull final BiFunction<R, E, R> function) {
+        return reduce(init, (ThrowableBiFunction<R, E, R, RuntimeException>) function);
+    }
+
+    @Override
+    public <R, Throws extends Throwable> R reduce(@Nonnull final R init, @Nonnull final ThrowableBiFunction<R, E, R, Throws> function) throws Throws {
         R result = init;
         for (final E item : this) {
             result = function.apply(result, item);

@@ -8,7 +8,7 @@ package net.hikaruna.rolling.function;
  * @param <R> 関数の結果の型
  */
 @SuppressWarnings("WeakerAccess")
-public interface BiFunction<T, U, R> {
+public interface BiFunction<T, U, R> extends ThrowableBiFunction<T, U, R, RuntimeException> {
 
     /**
      * 指定された引数にこの関数を適用します.
@@ -17,5 +17,6 @@ public interface BiFunction<T, U, R> {
      * @param u 関数の第2引数
      * @return 関数の結果
      */
-    R apply(T t, U u);
+    @Override
+    R apply(@SuppressWarnings("unused") T t, @SuppressWarnings("unused") U u);
 }
