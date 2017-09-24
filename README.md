@@ -1,6 +1,11 @@
 # rolling
 ## 概要
 rollingはjava7でmapReduceを行うためのライブラリです。
+java8のstreamAPIと違い、従来のCollectionAPIにそのままメソッドが追加されたかのように使用できます。
+
+- java8 stream api と差別化しています
+- collection api の形を踏襲しています
+- java8の function interface にできるだけ似せています
 
 ## Status
 [![Build Status](https://travis-ci.org/hikaruna/rolling.svg?branch=master)](https://travis-ci.org/hikaruna/rolling)
@@ -22,7 +27,7 @@ dependencies {
 
 ```
 
-## 使い方
+## Usage
 
 ### ライブラリを使わない例
 
@@ -64,6 +69,9 @@ final int mapReduceResult = arrayList.map(new Function<Integer, Integer>() {
 
 assertEquals(81, mapReduceResult);
 ```
+
+## クラス図
+![クラス図](https://raw.githubusercontent.com/hikaruna/rolling/gh-pages/res/class_diagram.png)
 
 ## License
 MIT
