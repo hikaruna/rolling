@@ -1,4 +1,6 @@
 # rolling
+[![Download](https://api.bintray.com/packages/hikaruna/maven/rolling/images/download.svg) ](https://bintray.com/hikaruna/maven/rolling/_latestVersion) [![Build Status](https://travis-ci.org/hikaruna/rolling.svg?branch=master)](https://travis-ci.org/hikaruna/rolling)
+
 ## 概要
 rollingはjava7でmapReduceを行うためのライブラリです。
 java8のstreamAPIと違い、従来のCollectionAPIにそのままメソッドが追加されたかのように使用できます。
@@ -7,9 +9,8 @@ java8のstreamAPIと違い、従来のCollectionAPIにそのままメソッド�
 - collection api の形を踏襲しています
 - java8の function interface にできるだけ似せています
 
-## Status
-[![Build Status](https://travis-ci.org/hikaruna/rolling.svg?branch=master)](https://travis-ci.org/hikaruna/rolling)
-[![Download](https://api.bintray.com/packages/hikaruna/maven/rolling/images/download.svg) ](https://bintray.com/hikaruna/maven/rolling/_latestVersion)
+## Document
+[javadoc](http://www.hikaruna.net/rolling/latest/)
 
 
 ## インストール
