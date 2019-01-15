@@ -5,16 +5,24 @@ import net.hikaruna.rolling.function.*;
 import javax.annotation.Nonnull;
 
 /**
- * 繰り返すことができる振る舞いを提供する.
+ * <span class="lang en">Provide repeatable behavior</span><span class="lang ja">繰り返すことができる振る舞いを提供する</span>.
  *
- * @param <E> the type of elements in this collection
+ * @param <E> <span class="lang en">the type of elements in this collection</span><span class="lang ja">このコレクション要素のType</span>
  */
 public interface Enumerable<E> {
 
     /**
+		 * <div class="lang ja">
      * 各要素に対してfunctionを評価します.
      *
      * @param consumer 評価内容
+		 * </div>
+		 *
+		 * <div class="lang en">
+		 * Apply function for each element.
+     *
+     * @param consumer function body
+		 * </div>
      */
     void each(@Nonnull Consumer<E> consumer);
 

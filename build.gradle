@@ -68,6 +68,7 @@ task javadocJar(type: Jar, dependsOn:javadoc) {
 
 javadoc {
     options.locale = 'en_US'
+    options.stylesheetFile = new File('./javadoc-stylesheet-en.css')
 }
 
 artifacts {
